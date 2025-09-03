@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { toast } from "mui-sonner";
 import { useRouter } from "next/navigation";
@@ -41,22 +41,22 @@ export default function HeroTelephones() {
         setFiltrer([...state]);
         break;
       case "samsung":
-        setFiltrer([...state.filter((produit) => produit.categorie === "samsung")]);
+        setFiltrer([...state.filter((p) => p.categorie === "samsung")]);
         break;
       case "alcatel":
-        setFiltrer([...state.filter((produit) => produit.categorie === "alcatel")]);
-        break;
-      case "prix croissant":
-        setFiltrer([...state.sort((a, b) => a.prix - b.prix)]);
-        break;
-      case "prix decroissant":
-        setFiltrer([...state.sort((a, b) => b.prix - a.prix)]);
+        setFiltrer([...state.filter((p) => p.categorie === "alcatel")]);
         break;
       case "iphone":
-        setFiltrer([...state.filter((produit) => produit.categorie === "iphone")]);
+        setFiltrer([...state.filter((p) => p.categorie === "iphone")]);
+        break;
+      case "prix croissant":
+        setFiltrer([...state].sort((a, b) => a.prix - b.prix));
+        break;
+      case "prix decroissant":
+        setFiltrer([...state].sort((a, b) => b.prix - a.prix));
         break;
       default:
-        console.log("Aucun membre trouvé");
+        console.log("Option inconnue");
     }
   }
 
@@ -94,62 +94,43 @@ export default function HeroTelephones() {
         <div className="container text-center">
           <h6 className="text-uppercase fw-bold mb-2">ElectroShop</h6>
           <h1 className="display-4 fw-bold mb-3">Téléphones</h1>
-          <p className="lead mb-5">Découvrez nos téléphones modernes et accessibles</p>
+          <p className="lead mb-5">
+            Découvrez nos téléphones modernes et accessibles
+          </p>
         </div>
       </section>
 
+      {/* Section Produits */}
       <section className="bg-light py-5">
         <div className="container">
           <h2 className="fw-bold text-center mb-4">Produits les plus populaires</h2>
 
           {/* Barre de recherche + filtres */}
-          <div className="row g-2 mb-4">
-            <div className="col-12 col-md-2">
+          <div className="row g-2 mb-4 align-items-center">
+            {/* Input de recherche */}
+            <div className="col-12 col-md-3 mb-2 mb-md-0">
               <Input state={state} onSearch={setFiltrer} />
             </div>
 
-            <div className="col-6 col-sm-3 col-md-2">
-              <button
-                style={{ background: "linear-gradient(90deg, #3b82f6, #8b5cf6)" }}
-                onClick={handleClick}
-                name="all"
-                className="btn btn-primary w-100"
+            {/* Boutons de filtre */}
+            {["all", "samsung", "alcatel", "iphone"].map((cat) => (
+              <div
+                key={cat}
+                className="col-6 col-sm-3 col-md-2 mb-2 mb-md-0"
               >
-                All
-              </button>
-            </div>
-            <div className="col-6 col-sm-3 col-md-2">
-              <button
-                style={{ background: "linear-gradient(90deg, #3b82f6, #8b5cf6)" }}
-                onClick={handleClick}
-                name="samsung"
-                className="btn btn-primary w-100"
-              >
-                Samsung
-              </button>
-            </div>
-            <div className="col-6 col-sm-3 col-md-2">
-              <button
-                style={{ background: "linear-gradient(90deg, #3b82f6, #8b5cf6)" }}
-                onClick={handleClick}
-                name="alcatel"
-                className="btn btn-primary w-100"
-              >
-                Alcatel
-              </button>
-            </div>
-            <div className="col-6 col-sm-3 col-md-2">
-              <button
-                style={{ background: "linear-gradient(90deg, #3b82f6, #8b5cf6)" }}
-                onClick={handleClick}
-                name="iphone"
-                className="btn btn-primary w-100"
-              >
-                iPhones
-              </button>
-            </div>
+                <button
+                  style={{ background: "linear-gradient(90deg, #3b82f6, #8b5cf6)" }}
+                  onClick={handleClick}
+                  name={cat}
+                  className="btn btn-primary w-100"
+                >
+                  {cat === "all" ? "All" : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </button>
+              </div>
+            ))}
 
-            <div className="col-12 col-md-2">
+            {/* Select de tri */}
+            <div className="col-12 col-md-3 mb-2 mb-md-0">
               <select className="form-select w-100" onChange={handleSelect}>
                 <option value="prix">Prix</option>
                 <option value="prix croissant">Prix croissant</option>
@@ -158,7 +139,7 @@ export default function HeroTelephones() {
             </div>
           </div>
 
-          {/* Liste ou Loader */}
+          {/* Liste de produits */}
           {filtrer.length > 0 ? (
             <div className="row g-4">
               {filtrer.map((product) => (
@@ -186,19 +167,14 @@ export default function HeroTelephones() {
                       <p className={`badge ${product.inStock ? "bg-success" : "bg-danger"}`}>
                         {product.inStock ? "En stock" : "Rupture"}
                       </p>
-                      <div className="mt-auto d-flex gap-2">
-                        {product.inStock ? (
-                          <button
-                            onClick={() => ajouterAuPanier(product)}
-                            className="btn btn-outline-primary w-100"
-                          >
-                            Ajouter au panier
-                          </button>
-                        ) : (
-                          <button disabled className="btn btn-outline-primary w-100">
-                            Ajouter au panier
-                          </button>
-                        )}
+                      <div className="mt-auto d-flex gap-2 flex-column flex-md-row">
+                        <button
+                          onClick={() => ajouterAuPanier(product)}
+                          className="btn btn-outline-primary w-100"
+                          disabled={!product.inStock}
+                        >
+                          Ajouter au panier
+                        </button>
                         <button
                           onClick={() => router.push(`/telPage/${product.slug}`)}
                           className="btn btn-primary w-100"
