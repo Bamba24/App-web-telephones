@@ -95,7 +95,7 @@ export default function HeroCarousel() {
           data-bs-target="#heroCarousel"
           data-bs-slide="prev"
         >
-          <span style={{backgroundColor: "gray"}} className="carousel-control-prev-icon" />
+          <span style={{backgroundColor: "gray", opacity: 0.4}} className="carousel-control-prev-icon" />
         </button>
         <button
           className="carousel-control-next"
@@ -103,7 +103,7 @@ export default function HeroCarousel() {
           data-bs-target="#heroCarousel"
           data-bs-slide="next"
         >
-          <span style={{backgroundColor: "gray"}} className="carousel-control-next-icon" />
+          <span style={{backgroundColor: "gray", opacity: 0.4}} className="carousel-control-next-icon" />
         </button>
       </div>
     </div>

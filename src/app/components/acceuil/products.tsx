@@ -17,7 +17,7 @@ const products = [
     price: 1099.99,
     rating: 4.2,
     inStock: false,
-    image: "/images/iphones/iphone_14.jpg", // Remplace par l'image appropriée
+    image: "/images/Iphones/iphone_14.jpg", // Remplace par l'image appropriée
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const products = [
     price: 129.99,
     rating: 4.8,
     inStock: true,
-    image: "/images/casques/Casque_Bose8700.jpeg", // Remplace par l'image appropriée
+    image: "/images/casques/Casque_Bose_700.jpeg", // Remplace par l'image appropriée
   },
 ];
 
