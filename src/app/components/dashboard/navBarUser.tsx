@@ -49,6 +49,7 @@ export default function Header() {
         <Link className="navbar-brand fw-bold text-dark" href="/">ElectroShop</Link>
 
         <button
+        style={{backgroundColor: "black"}}
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -82,7 +83,6 @@ export default function Header() {
 
             {token ? (
               <>
-                <span className="text-dark fw-bold">Bonjour, Client</span>
                 <button onClick={handleOut} className="btn btn-sm btn-danger">Déconnexion</button>
               </>
             ) : (

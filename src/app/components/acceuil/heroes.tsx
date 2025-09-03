@@ -19,8 +19,8 @@ export default function HeroCarousel() {
                   Découvrez les dernières technologies mobiles et informatiques.
                   Livraison rapide et service client garanti.
                 </p>
-                <div className="d-flex gap-3">
-                  <Link href="/telPage" className="btn btn-primary btn-lg">Voir les produits</Link>
+                <div className="d-flex gap-3 sm:justify-center">
+                  <Link href="/telPage" className="btn btn-primary btn-lg ">Voir les produits</Link>
                 </div>
               </div>
               <div className="d-none d-md-block ms-md-5">
