@@ -104,7 +104,7 @@ export default function HeroTelephones() {
 
           {/* Barre de recherche + filtres */}
           <div className="row g-2 mb-4">
-            <div className="col-12 col-md-4">
+            <div className="col-12 col-md-2">
               <Input state={state} onSearch={setFiltrer} />
             </div>
 
