@@ -1,6 +1,5 @@
-// src/app/components/Testimonials.tsx
-
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -39,7 +38,7 @@ const testimonials = [
 export default function Testimonials() {
   const [current, setCurrent] = useState<number>(0);
 
-  // Défilement automatique toutes les 5s
+  // Défilement automatique toutes les 5 secondes
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % testimonials.length);
@@ -55,71 +54,57 @@ export default function Testimonials() {
     setCurrent((prev) => (prev + 1) % testimonials.length);
   };
 
-  // On affiche toujours 2 témoignages (1 seul sur mobile grâce au grid Bootstrap)
-  const visibleSlides = [
-    testimonials[current],
-    testimonials[(current + 1) % testimonials.length],
-  ];
+  const testimonial = testimonials[current];
 
   return (
     <div className="container my-5 py-5 position-relative">
       <h2 className="fw-bold text-center mb-4">Ce que disent nos clients</h2>
 
-      <div className="row justify-content-center g-4">
-        {visibleSlides.map((testimonial) => (
-          <div key={testimonial.id} className="col-12 col-md-5">
-            <div className="card shadow-sm border-0 p-4 h-100">
-              <div className="card-body">
-                <p className="card-text fst-italic">
-                  &quot;{testimonial.text}&quot;
-                </p>
-                <div className="d-flex align-items-center mt-4">
-                  <Image
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    width={50}
-                    height={50}
-                    className="rounded-circle me-3"
-                  />
-                  <div>
-                    <h6 className="mb-0">{testimonial.name}</h6>
-                    <div className="text-warning small">
-                      {"★".repeat(testimonial.rating)}{" "}
-                      <span className="text-muted">
-                        ({testimonial.rating}/5)
-                      </span>
-                    </div>
-                  </div>
-                </div>
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-6">
+          <div className="card shadow-sm border-0 p-4 h-100 text-center">
+            <p className="card-text fst-italic">&quot;{testimonial.text}&quot;</p>
+            <div className="d-flex flex-column align-items-center mt-4">
+              <Image
+                src={testimonial.image}
+                alt={testimonial.name}
+                width={60}
+                height={60}
+                className="rounded-circle mb-2"
+              />
+              <h6 className="mb-0">{testimonial.name}</h6>
+              <div className="text-warning small">
+                {"★".repeat(testimonial.rating)}{" "}
+                <span className="text-muted">({testimonial.rating}/5)</span>
               </div>
             </div>
           </div>
-        ))}
+        </div>
       </div>
 
       {/* Boutons navigation */}
       <button
         onClick={prevSlide}
-        className="btn btn-light shadow rounded-circle position-absolute top-50 start-0 translate-middle-y"
+        className="btn btn-primary shadow rounded-circle position-absolute top-50 start-0 translate-middle-y p-2 d-flex align-items-center justify-content-center"
+        style={{ width: 40, height: 40 }}
       >
-        <ChevronLeft size={24} />
+        <ChevronLeft size={20} color="white" />
       </button>
       <button
         onClick={nextSlide}
-        className="btn btn-light shadow rounded-circle position-absolute top-50 end-0 translate-middle-y"
+        className="btn btn-primary shadow rounded-circle position-absolute top-50 end-0 translate-middle-y p-2 d-flex align-items-center justify-content-center"
+        style={{ width: 40, height: 40 }}
       >
-        <ChevronRight size={24} />
+        <ChevronRight size={20} color="white" />
       </button>
 
-      {/* Pagination (points cliquables) */}
+      {/* Pagination */}
       <div className="d-flex justify-content-center mt-4">
         {testimonials.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`mx-1 rounded-circle ${
-              index === current ? "bg-primary" : "bg-secondary"
-            }`}
+            className={`mx-1 rounded-circle ${index === current ? "bg-primary" : "bg-secondary"}`}
             style={{ width: 12, height: 12, border: "none" }}
           />
         ))}

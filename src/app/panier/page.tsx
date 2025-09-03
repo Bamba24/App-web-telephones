@@ -4,10 +4,9 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "mui-sonner";
 import { useRouter } from "next/navigation";
-import axios from "axios"; // ✅ Import Axios
-import EmptyCard from "@/app/components/produits/EmptyCard"; // Import your empty cart illustration
+import axios from "axios";
+import EmptyCard from "@/app/components/produits/EmptyCard";
 
-// Définition des types
 type Article = {
   id: number;
   name: string;
@@ -47,7 +46,7 @@ export default function Panier() {
     const produitCommander = localStorage.getItem("panier");
     const token = localStorage.getItem("token");
 
-    if (!produitCommander || produitCommander.length === 0 ) {
+    if (!produitCommander || produitCommander.length === 0) {
       toast.error("Veuillez ajouter des produits à votre panier avant de commander.");
     } else {
       const articlesParsed = JSON.parse(produitCommander);
@@ -62,11 +61,9 @@ export default function Panier() {
         router.push("/formulaire");
         toast.success("Merci pour votre commande !");
         window.dispatchEvent(new Event("panierUpdated"));
-
       } catch (error) {
-        
         console.error("Erreur lors de la commande :", error);
-        router.push('/login')
+        router.push("/login");
       }
     }
   };
@@ -74,75 +71,80 @@ export default function Panier() {
   const total = panier.reduce((acc, item) => acc + item.prix * item.quantite, 0);
 
   return (
-    <>
-      <div className="container py-5">
-
-        {panier.length === 0 ? (
-          <EmptyCard />
-        ) : (
-          <div className="row">
-            <div className="col-md-8">
-              {panier.map((item) => (
-                <div key={item.id} className="d-flex mb-4 border p-3 rounded shadow-sm">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    width={100}
-                    height={100}
-                    style={{ objectFit: "cover", borderRadius: "8px" }}
-                  />
-                  <div className="ms-3 flex-grow-1">
-                    <h5>{item.name}</h5>
-                    <p>Prix unitaire : {item.prix} fcfa</p>
-                    <div className="d-flex align-items-center gap-2">
-                      <label>Quantité :</label>
-                      <input
-                        type="number"
-                        value={item.quantite}
-                        min={1}
-                        className="form-control w-auto"
-                        onChange={(e) =>
-                          updateQuantity(item.id, parseInt(e.target.value))
-                        }
-                      />
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => removeItem(item.id)}
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  </div>
-                  <div className="text-end">
-                    <strong>{item.prix * item.quantite} fcfa</strong>
+    <div className="container py-5">
+      {panier.length === 0 ? (
+        <EmptyCard />
+      ) : (
+        <div className="row g-4">
+          {/* Items */}
+          <div className="col-12 col-lg-8">
+            {panier.map((item) => (
+              <div
+                key={item.id}
+                className="d-flex flex-column flex-md-row mb-4 border p-3 rounded shadow-sm align-items-center"
+              >
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={100}
+                  height={100}
+                  style={{ objectFit: "cover", borderRadius: "8px" }}
+                />
+                <div className="ms-md-3 mt-3 mt-md-0 flex-grow-1 text-center text-md-start">
+                  <h5>{item.name}</h5>
+                  <p>Prix unitaire : {item.prix} fcfa</p>
+                  <div className="d-flex flex-column flex-sm-row align-items-center gap-2 justify-content-center justify-content-md-start">
+                    <label>Quantité :</label>
+                    <input
+                      type="number"
+                      value={item.quantite}
+                      min={1}
+                      className="form-control w-auto"
+                      onChange={(e) =>
+                        updateQuantity(item.id, parseInt(e.target.value))
+                      }
+                    />
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => removeItem(item.id)}
+                    >
+                      Supprimer
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            <div className="col-md-4">
-              <div className="border p-4 rounded shadow-sm bg-light sticky-top" style={{ top: "80px" }}>
-                <h4 className="mb-3">🧾 Résumé de la commande</h4>
-                <ul className="list-group mb-3">
-                  {panier.map((item) => (
-                    <li key={item.id} className="list-group-item d-flex justify-content-between">
-                      <span>{item.name} × {item.quantite}</span>
-                      <span>{item.prix * item.quantite} fcfa</span>
-                    </li>
-                  ))}
-                  <li className="list-group-item d-flex justify-content-between fw-bold">
-                    <span>Total</span>
-                    <span>{total} fcfa</span>
-                  </li>
-                </ul>
-                <button className="btn btn-success w-100" onClick={handleOrder}>
-                  Commander
-                </button>
+                <div className="mt-3 mt-md-0 text-center text-md-end">
+                  <strong>{item.prix * item.quantite} fcfa</strong>
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* Résumé */}
+          <div className="col-12 col-lg-4">
+            <div className="border p-4 rounded shadow-sm bg-light" style={{ top: "0" }}>
+              <h4 className="mb-3">🧾 Résumé de la commande</h4>
+              <ul className="list-group mb-3">
+                {panier.map((item) => (
+                  <li
+                    key={item.id}
+                    className="list-group-item d-flex justify-content-between"
+                  >
+                    <span>{item.name} × {item.quantite}</span>
+                    <span>{item.prix * item.quantite} fcfa</span>
+                  </li>
+                ))}
+                <li className="list-group-item d-flex justify-content-between fw-bold">
+                  <span>Total</span>
+                  <span>{total} fcfa</span>
+                </li>
+              </ul>
+              <button className="btn btn-success w-100" onClick={handleOrder}>
+                Commander
+              </button>
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 }

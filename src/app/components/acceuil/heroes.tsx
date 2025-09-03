@@ -19,8 +19,8 @@ export default function HeroCarousel() {
                   Découvrez les dernières technologies mobiles et informatiques.
                   Livraison rapide et service client garanti.
                 </p>
-                <div className="d-flex gap-3 sm:justify-center">
-                  <Link href="/telPage" className="btn btn-primary btn-lg ">Voir les produits</Link>
+                <div className="d-flex justify-content-center justify-content-md-start gap-3">
+                  <Link href="/telPage" className="btn btn-primary btn-lg">Voir les produits</Link>
                 </div>
               </div>
               <div className="d-none d-md-block ms-md-5">
@@ -44,7 +44,7 @@ export default function HeroCarousel() {
                 <p className="fs-4">
                   Téléphones haut de gamme et ordinateurs puissants en stock !
                 </p>
-                <div className="d-flex gap-3">
+                <div className="d-flex justify-content-center justify-content-md-start gap-3">
                   <button className="btn btn-success btn-lg">Découvrir</button>
                 </div>
               </div>
@@ -69,7 +69,7 @@ export default function HeroCarousel() {
                 <p className="fs-4">
                   Chargeurs, écouteurs, clés USB et bien plus encore.
                 </p>
-                <div className="d-flex gap-3">
+                <div className="d-flex justify-content-center justify-content-md-start gap-3">
                   <button className="btn btn-warning btn-lg">Voir les accessoires</button>
                 </div>
               </div>
